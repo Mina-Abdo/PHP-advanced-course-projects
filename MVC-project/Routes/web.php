@@ -6,6 +6,10 @@ use App\Controllers\ProfileController;
 
 Route::get("home" ,function(){
     echo 'home';
+
+} );
+Route::get("/" ,function(){
+    echo 'index';
 } );
 Route::get('profile' , [ProfileController::class , 'index']);
 

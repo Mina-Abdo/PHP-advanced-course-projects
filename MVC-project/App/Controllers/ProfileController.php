@@ -3,7 +3,9 @@ namespace App\Controllers;
 
 class ProfileController{
     public function index(){
-        echo "profile";
+        // echo "profile";
+
+        return view('dashboard.index' , ['name'=>'Mina']);
     }
 
     

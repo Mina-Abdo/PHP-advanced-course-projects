@@ -26,14 +26,37 @@ class Route{
         $method = $this->request->method();
         $data = $this->request->all();
 
-        $action = self::$routes[$method][$url];
+        $action = self::$routes[$method][$url] ?? null;
         // error handling
-
+        $this->errorHandle($url , $method);
         $this->actionHandle($action , $data);
 
     }
 
-    public function actionHandle(callable | array | string $action , array $data)
+    public function errorHandle(string $url , string $method)
+    {
+        // dump(self::$routes);
+        $routeFound = false;
+        $is405 = false;
+        foreach(self::$routes as $requestMethod => $requestUrl)
+        {
+            if(array_key_exists($url , $requestUrl)){
+                $routeFound = true;
+                if($requestMethod != $method){
+                    $is405 = true;
+                }
+            }
+        }
+
+        if(! $routeFound){
+            abort(404);
+        }
+        if($is405){
+            abort(405);
+        }
+    }
+
+    public function actionHandle(callable | array | string | null $action , array $data)
     {
         if(is_callable($action)){
             call_user_func_array($action , $data);
