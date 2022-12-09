@@ -10,6 +10,11 @@ class View{
         // get title , content
         $baseView =  self::getBaseView();
         $contentView =  self::getContentView( $viewPath , $data );
+        // echo self::mixer($baseView , $contentView);
+        self::printView($baseView , $contentView);
+    }
+
+    private static function printView($baseView ,$contentView ){
         echo self::mixer($baseView , $contentView);
     }
 

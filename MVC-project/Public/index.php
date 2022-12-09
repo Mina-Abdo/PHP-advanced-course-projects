@@ -1,21 +1,32 @@
 <?php
 
-use Dotenv\Dotenv;
-use Src\Http\Route;
-use Src\Http\Request;
-use Src\Http\Response;
+use Src\Validation\Validator;
+use Src\Validation\Rules\RequiredRule;
+use Src\Validation\Rules\AlphaNumericalRule;
 
 require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 require base_path('//Routes/web.php');
 
-$dotenv = Dotenv::createImmutable(base_path());
-$dotenv->safeLoad();
 
-$obj = new Route(new Request , new Response);
-$obj->resolve();
+app()->run();
+
+$data = [
+    "first_name"=>"mina",
+    'password'=>'12345'
+];
+
+$rules = [
+    'first_name'=>'required|min:2',
+    'password'=>['required' , 'between:4,6']
+];
+
+$messages = [];
+
+$attributes = [];
 
 
+$validator = Validator::make($data , $rules , $messages , $attributes);
 
-    
-
-
+if($validator->fails()){
+    dd($validator->allErrors());
+}

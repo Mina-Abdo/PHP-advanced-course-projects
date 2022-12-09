@@ -1,5 +1,6 @@
 <?php
 
+use Src\Application;
 use Src\Resources\View;
 
 if(! function_exists('url_slash_handle')){
@@ -82,5 +83,12 @@ if(! function_exists('abort')){
 if(! function_exists('env')){
     function env($key , $default = null){
         return $_ENV[$key] ?? $default ;
+    }
+}
+
+if(! function_exists('app')){
+    function app(){
+        $app = Application::getInstance();
+        return $app ;
     }
 }
