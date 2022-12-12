@@ -1,8 +1,6 @@
 <?php
 
-use Src\Validation\Validator;
-use Src\Validation\Rules\RequiredRule;
-use Src\Validation\Rules\AlphaNumericalRule;
+use Src\Database\Managers\MYSQLManager;
 
 require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 require base_path('//Routes/web.php');
@@ -10,23 +8,8 @@ require base_path('//Routes/web.php');
 
 app()->run();
 
-$data = [
-    "first_name"=>"mina",
-    'password'=>'12345'
-];
-
-$rules = [
-    'first_name'=>'required|min:2',
-    'password'=>['required' , 'between:4,6']
-];
-
-$messages = [];
-
-$attributes = [];
-
-
-$validator = Validator::make($data , $rules , $messages , $attributes);
-
-if($validator->fails()){
-    dd($validator->allErrors());
-}
+dd(env("APP_NAME"));
+// dd($_ENV["APP_NAME"]);
+$mysqlManager = new MYSQLManager;
+$mysqlManager->connect();
+$mysqlManager->creat(['username'=>"mina" , 'password'=>1234567]);
